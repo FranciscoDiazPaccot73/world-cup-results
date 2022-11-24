@@ -1,4 +1,8 @@
 ---
+import { Image } from '@astrojs/image/components';
+
+import { formatImageTitle } from '../utils';
+
 const { octavos, cuartos, semis, final, tercero } = Astro.props;
 
 const cuartosID: any = {
@@ -27,8 +31,6 @@ const semisID: any = {
       if (rest.length) {
         penaltiesA = rest[0]
         penaltiesB = rest[1]
-        console.log(penaltiesA, penaltiesB, penaltiesA > penaltiesB)
-
         winner = penaltiesB > penaltiesA ? 'b' : 'a';
       }
 
@@ -38,11 +40,13 @@ const semisID: any = {
           <div class="absolute w-10 bg-purple-600 horizontal" />
           {!(index % 2) && <div class="absolute bg-purple-600 vertical" />}
           <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
+            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
             {game.teama}
             <span class="ml-auto">{goalsTeamA ?? '-'}</span>
             {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
-          </div>
+            </div>
           <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
+            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
             {game.teamb}
             <span class="ml-auto">{goalsTeamB ?? '-'}</span>
             {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
@@ -73,11 +77,13 @@ const semisID: any = {
           <div class="absolute w-10 bg-purple-600 horizontal-left" />
           {!(index % 2) && <div class="absolute bg-purple-600 vertical-lg" />}
           <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
+            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
             {game.teama}
             <span class="ml-auto">{goalsTeamA ?? '-'}</span>
             {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
           </div>
           <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
+            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
             {game.teamb}
             <span class="ml-auto">{goalsTeamB ?? '-'}</span>
             {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
@@ -108,11 +114,13 @@ const semisID: any = {
           <div class="absolute w-10 bg-purple-600 horizontal-left" />
           {!(index % 2) && <div class="absolute bg-purple-600 vertical-xl" />}
           <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
+            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
             {game.teama}
             <span class="ml-auto">{goalsTeamA ?? '-'}</span>
             {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
           </div>
           <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
+            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
             {game.teamb}
             <span class="ml-auto">{goalsTeamB ?? '-'}</span>
             {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
@@ -140,10 +148,12 @@ const semisID: any = {
         <div class="relative px-5 py-6 border rounded-md border-purple-600">
           <div class="absolute w-10 bg-purple-600 horizontal-left" />
           <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
+            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
             {game.teama}
             <span class="ml-auto">{goalsTeamA ?? '-'}</span>
           </div>
           <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
+            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
             {game.teamb}
             <span class="ml-auto">{goalsTeamB ?? '-'}</span>
           </div>
@@ -168,10 +178,12 @@ const semisID: any = {
         return (
           <div class="relative px-5 py-6 border rounded-md border-purple-600">
             <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
+              {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
               {game.teama}
               <span class="ml-auto">{goalsTeamA ?? '-'}</span>
             </div>
             <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
+              {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
               {game.teamb}
               <span class="ml-auto">{goalsTeamB ?? '-'}</span>
             </div>
