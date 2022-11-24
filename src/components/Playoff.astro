@@ -18,20 +18,34 @@ const semisID: any = {
 <div class="flex mt-10 gap-20 overflow-auto whitespace-nowrap">
   <div id='octavos' class="flex flex-col gap-4">
     {octavos?.map((game: any, index: any) => {
-      const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+      const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
+      let penaltiesA, penaltiesB, winner;
+
+      if (goalsTeamA) {
+        winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
+      }
+      if (rest.length) {
+        penaltiesA = rest[0]
+        penaltiesB = rest[1]
+        console.log(penaltiesA, penaltiesB, penaltiesA > penaltiesB)
+
+        winner = penaltiesB > penaltiesA ? 'b' : 'a';
+      }
 
       return (
         <div class="relative px-5 py-6 border rounded-md border-purple-600">
           <div class="absolute top-1 left-1 text-sm w-5 h-5 text-center bg-purple-300 rounded-full">{index + 1}</div>
           <div class="absolute w-10 bg-purple-600 horizontal" />
           {!(index % 2) && <div class="absolute bg-purple-600 vertical" />}
-          <div class="flex w-40">
+          <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
             {game.teama}
             <span class="ml-auto">{goalsTeamA ?? '-'}</span>
+            {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
           </div>
-          <div class="flex w-40">
+          <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
             {game.teamb}
             <span class="ml-auto">{goalsTeamB ?? '-'}</span>
+            {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
           </div>
         </div>
       )})
@@ -39,7 +53,18 @@ const semisID: any = {
   </div>
   <div id='cuartos' class="flex flex-col">
     {cuartos?.map((game: any, index: any) => {
-      const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+      const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
+      let penaltiesA, penaltiesB, winner;
+
+      if (goalsTeamA) {
+        winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
+      }
+      if (rest.length) {
+        penaltiesA = rest[0]
+        penaltiesB = rest[1]
+
+        winner = penaltiesB > penaltiesA ? 'b' : 'a';
+      }
 
       return (
         <div class="relative px-5 py-6 border rounded-md border-purple-600 cuartos-elem">
@@ -47,13 +72,15 @@ const semisID: any = {
           <div class="absolute w-10 bg-purple-600 horizontal" />
           <div class="absolute w-10 bg-purple-600 horizontal-left" />
           {!(index % 2) && <div class="absolute bg-purple-600 vertical-lg" />}
-          <div class="flex w-40">
+          <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
             {game.teama}
             <span class="ml-auto">{goalsTeamA ?? '-'}</span>
+            {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
           </div>
-          <div class="flex w-40">
+          <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
             {game.teamb}
             <span class="ml-auto">{goalsTeamB ?? '-'}</span>
+            {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
           </div>
         </div>
       )})
@@ -61,7 +88,18 @@ const semisID: any = {
   </div>
   <div id='semis' class="flex flex-col">
     {semis?.map((game: any, index: any) => {
-      const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+      const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
+      let penaltiesA, penaltiesB, winner;
+
+      if (goalsTeamA) {
+        winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
+      }
+      if (rest.length) {
+        penaltiesA = rest[0]
+        penaltiesB = rest[1]
+
+        winner = penaltiesB > penaltiesA ? 'b' : 'a';
+      }
 
       return (
         <div class="relative px-5 py-6 border rounded-md border-purple-600 semis-elem">
@@ -69,13 +107,15 @@ const semisID: any = {
           <div class="absolute w-10 bg-purple-600 horizontal" />
           <div class="absolute w-10 bg-purple-600 horizontal-left" />
           {!(index % 2) && <div class="absolute bg-purple-600 vertical-xl" />}
-          <div class="flex w-40">
+          <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
             {game.teama}
             <span class="ml-auto">{goalsTeamA ?? '-'}</span>
+            {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
           </div>
-          <div class="flex w-40">
+          <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
             {game.teamb}
             <span class="ml-auto">{goalsTeamB ?? '-'}</span>
+            {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
           </div>
         </div>
       )})
@@ -83,16 +123,27 @@ const semisID: any = {
   </div>
   <div id='final' class="flex flex-col">
     {final?.map((game: any) => {
-      const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+      const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
+      let penaltiesA, penaltiesB, winner;
+
+      if (goalsTeamA) {
+        winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
+      }
+      if (rest.length) {
+        penaltiesA = rest[0]
+        penaltiesB = rest[1]
+
+        winner = penaltiesB > penaltiesA ? 'b' : 'a';
+      }
 
       return (
         <div class="relative px-5 py-6 border rounded-md border-purple-600">
           <div class="absolute w-10 bg-purple-600 horizontal-left" />
-          <div class="flex w-40">
+          <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
             {game.teama}
             <span class="ml-auto">{goalsTeamA ?? '-'}</span>
           </div>
-          <div class="flex w-40">
+          <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
             {game.teamb}
             <span class="ml-auto">{goalsTeamB ?? '-'}</span>
           </div>
@@ -101,15 +152,26 @@ const semisID: any = {
     }
     <div id='tercero' class="flex flex-col mt-10">
       {tercero?.map((game: any) => {
-        const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+        const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
+        let penaltiesA, penaltiesB, winner;
+
+        if (goalsTeamA) {
+          winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
+        }
+        if (rest.length) {
+          penaltiesA = rest[0]
+          penaltiesB = rest[1]
+
+          winner = penaltiesB > penaltiesA ? 'b' : 'a';
+        }
 
         return (
           <div class="relative px-5 py-6 border rounded-md border-purple-600">
-            <div class="flex w-40">
+            <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
               {game.teama}
               <span class="ml-auto">{goalsTeamA ?? '-'}</span>
             </div>
-            <div class="flex w-40">
+            <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
               {game.teamb}
               <span class="ml-auto">{goalsTeamB ?? '-'}</span>
             </div>
@@ -161,4 +223,13 @@ const semisID: any = {
   #final {
     margin-top: 388px;
   }
+  .winner::after {
+		content: '';
+		height: 18px;
+		width: 4px;
+		background-color: #9333ea;
+		position: absolute;
+		top: 4px;
+		right: -10px;
+	}
 </style>

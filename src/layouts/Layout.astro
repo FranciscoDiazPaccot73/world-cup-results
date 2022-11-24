@@ -10,6 +10,12 @@ export interface Props {
 }
 
 const { title, page, year } = Astro.props;
+
+const sedes = [
+	{ label: 'QATAR', id: '2022' },
+	{ label: 'RUSIA', id: '2018' },
+	{ label: 'BRASIL', id: '2014' },
+]
 ---
 
 <!DOCTYPE html>
@@ -24,7 +30,12 @@ const { title, page, year } = Astro.props;
 	<div class="flex flex-col mb-4 mt-12 items-center justify-center w-full">
 		<Image src={`/logo-${year}.png`} alt="Logo" width={150} height={90} loading="eager" format="png" />
 	</div>
-	<p class="w-full text-4xl text-center px-6">Welcome to <span class="text-gradient font-bold">FIFA World Cup</span> results</p>
+	<p class="w-full text-4xl text-center px-6">
+		<select name="sedes" id="sedes" class="cursor-pointer rounded-full p-3 text-3xl border border-purple-600">
+			{sedes.map((sede: any) => <option value={sede.id}>{sede.label}</option>)}
+		</select>
+		<span class="text-gradient font-bold">FIFA World Cup</span> results
+	</p>
 	<nav class="m-auto max-w-3xl px-6 mt-6">
 		<ul class="flex border-b">
 			<li class={`py-0 w-24 text-center cursor-pointer ${page === 'home' ? "nav-selected" : ''} nav-elem`}>
@@ -43,6 +54,20 @@ const { title, page, year } = Astro.props;
 		<slot />
 	</body>
 </html>
+
+<script>
+	const dropdown: any = document.getElementById('sedes');
+
+	const pathName = window.location.pathname;
+	const split = pathName.split('/')
+	
+	dropdown.value = split[1]
+
+	dropdown.addEventListener('change', (e: any) => {
+		window.location.assign(`/${e.target.value}`)
+	})
+</script>
+
 <style is:global>
 	:root {
 		--accent: 124, 58, 237;
@@ -51,7 +76,7 @@ const { title, page, year } = Astro.props;
 	}
 	html {
 		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
+		background-color: #f5efef;
 	}
 	.text-gradient {
 		background-image: var(--accent-gradient);

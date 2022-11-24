@@ -31,7 +31,7 @@ const header = [
 					{info.teams.map((team: any )=> (
 						<div class="flex gap-2 text-xs relative bord md:gap-6 md:text-base">
 							<p class="gaps">
-								<Image src={`/${formatImageTitle(team.name)}.png`} alt="Logo" width={24} height={20} loading="eager" format="png" />
+								<Image src={`/${formatImageTitle(team.name)}.png`} alt={team.name} width={24} height={20} loading="eager" format="png" />
 								<span class="hidden md:block">{team.name}</span>
 							</p>
 							<p class="gaps">{team.pj}</p>
