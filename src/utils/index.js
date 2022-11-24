@@ -76,3 +76,5 @@ export const formatResult = (data) => {
 
   return items;
 }
+
+export const formatImageTitle = (name) => name.replaceAll(' ', '').toLowerCase()

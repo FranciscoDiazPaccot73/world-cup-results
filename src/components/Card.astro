@@ -1,4 +1,8 @@
 ---
+import { Image } from '@astrojs/image/components';
+
+import { formatImageTitle } from '../utils';
+
 export interface Props {
 	title: string;
 	info: any
@@ -26,7 +30,10 @@ const header = [
 				<div class="flex flex-col">
 					{info.teams.map((team: any )=> (
 						<div class="flex gap-2 text-xs md:gap-6 md:text-base">
-							<p class="gaps">{team.name}</p>
+							<p class="gaps">
+								<Image src={`/${formatImageTitle(team.name)}.png`} alt="Logo" width={24} height={20} loading="eager" format="png" />
+								<span class="hidden md:block">{team.name}</span>
+							</p>
 							<p class="gaps">{team.pj}</p>
 							<p class="gaps">{team.win}</p>
 							<p class="gaps">{team.emp}</p>
@@ -88,6 +95,8 @@ const header = [
 	.gaps:first-of-type {
 		margin-right: auto;
 		width: auto;
+		display: flex;
+		gap: 6px;
 	}
 	@media(max-width: 768px) {
 		.gaps {
