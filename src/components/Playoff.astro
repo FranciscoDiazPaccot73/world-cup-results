@@ -1,0 +1,164 @@
+---
+const { octavos, cuartos, semis, final, tercero } = Astro.props;
+
+const cuartosID: any = {
+  0: 'A',
+  1: 'B',
+  2: 'C',
+  3: "D"
+}
+
+const semisID: any = {
+  0: 'I',
+  1: 'II',
+}
+
+---
+
+<div class="flex mt-10 gap-20 overflow-auto whitespace-nowrap">
+  <div id='octavos' class="flex flex-col gap-4">
+    {octavos?.map((game: any, index: any) => {
+      const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+
+      return (
+        <div class="relative px-5 py-6 border rounded-md border-purple-600">
+          <div class="absolute top-1 left-1 text-sm w-5 h-5 text-center bg-purple-300 rounded-full">{index + 1}</div>
+          <div class="absolute w-10 bg-purple-600 horizontal" />
+          {!(index % 2) && <div class="absolute bg-purple-600 vertical" />}
+          <div class="flex w-40">
+            {game.teama}
+            <span class="ml-auto">{goalsTeamA ?? '-'}</span>
+          </div>
+          <div class="flex w-40">
+            {game.teamb}
+            <span class="ml-auto">{goalsTeamB ?? '-'}</span>
+          </div>
+        </div>
+      )})
+    }
+  </div>
+  <div id='cuartos' class="flex flex-col">
+    {cuartos?.map((game: any, index: any) => {
+      const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+
+      return (
+        <div class="relative px-5 py-6 border rounded-md border-purple-600 cuartos-elem">
+          <div class="absolute top-1 left-1 text-sm w-5 h-5 text-center bg-purple-300 rounded-full">{cuartosID[index]}</div>
+          <div class="absolute w-10 bg-purple-600 horizontal" />
+          <div class="absolute w-10 bg-purple-600 horizontal-left" />
+          {!(index % 2) && <div class="absolute bg-purple-600 vertical-lg" />}
+          <div class="flex w-40">
+            {game.teama}
+            <span class="ml-auto">{goalsTeamA ?? '-'}</span>
+          </div>
+          <div class="flex w-40">
+            {game.teamb}
+            <span class="ml-auto">{goalsTeamB ?? '-'}</span>
+          </div>
+        </div>
+      )})
+    }
+  </div>
+  <div id='semis' class="flex flex-col">
+    {semis?.map((game: any, index: any) => {
+      const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+
+      return (
+        <div class="relative px-5 py-6 border rounded-md border-purple-600 semis-elem">
+          <div class="absolute top-1 left-1 text-sm w-5 h-5 text-center bg-purple-300 rounded-full">{semisID[index]}</div>
+          <div class="absolute w-10 bg-purple-600 horizontal" />
+          <div class="absolute w-10 bg-purple-600 horizontal-left" />
+          {!(index % 2) && <div class="absolute bg-purple-600 vertical-xl" />}
+          <div class="flex w-40">
+            {game.teama}
+            <span class="ml-auto">{goalsTeamA ?? '-'}</span>
+          </div>
+          <div class="flex w-40">
+            {game.teamb}
+            <span class="ml-auto">{goalsTeamB ?? '-'}</span>
+          </div>
+        </div>
+      )})
+    }
+  </div>
+  <div id='final' class="flex flex-col">
+    {final?.map((game: any) => {
+      const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+
+      return (
+        <div class="relative px-5 py-6 border rounded-md border-purple-600">
+          <div class="absolute w-10 bg-purple-600 horizontal-left" />
+          <div class="flex w-40">
+            {game.teama}
+            <span class="ml-auto">{goalsTeamA ?? '-'}</span>
+          </div>
+          <div class="flex w-40">
+            {game.teamb}
+            <span class="ml-auto">{goalsTeamB ?? '-'}</span>
+          </div>
+        </div>
+      )})
+    }
+    <div id='tercero' class="flex flex-col mt-10">
+      {tercero?.map((game: any) => {
+        const [goalsTeamA, goalsTeamB] = game.result?.split('-') ?? [null, null]
+
+        return (
+          <div class="relative px-5 py-6 border rounded-md border-purple-600">
+            <div class="flex w-40">
+              {game.teama}
+              <span class="ml-auto">{goalsTeamA ?? '-'}</span>
+            </div>
+            <div class="flex w-40">
+              {game.teamb}
+              <span class="ml-auto">{goalsTeamB ?? '-'}</span>
+            </div>
+          </div>
+        )})
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .horizontal {
+    height: 1px;
+    top: 50%;
+    left: 100%;
+  }
+  .horizontal-left {
+    height: 1px;
+    top: 50%;
+    right: 100%;
+  }
+  .vertical {
+    width: 1px;
+    height: 115px;
+    left: calc(100% + 40px);
+    top: 50%;
+  }
+  .vertical-lg {
+    width: 1px;
+    height: 236px;
+    left: calc(100% + 40px);
+    top: 50%;
+  }
+  .vertical-xl {
+    width: 1px;
+    height: 479px;
+    left: calc(100% + 40px);
+    top: 50%;
+  }
+  .semis-elem:first-of-type {
+    margin: 160px 0 380px;
+  }
+  .cuartos-elem:first-of-type {
+    margin-top: 49px;
+  }
+  .cuartos-elem {
+    margin-top: 137px;
+  }
+  #final {
+    margin-top: 388px;
+  }
+</style>

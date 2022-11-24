@@ -77,4 +77,25 @@ export const formatResult = (data) => {
   return items;
 }
 
+export const formatPlayoffResult = (data) => {
+  const items = []
+  data.forEach(res => {
+    let result = { id: res.id };
+    const keys = {
+      1: 'result',
+      2: 'teamA',
+      3: 'teamB'
+    }
+    res.components?.forEach(({ type, child, ...others }, index) => {
+      if (type === 'string') {
+        const stringResult = formatStringType({ value: others.value, label: keys[index] });
+        result = { ...result, ...stringResult }
+      }
+    });
+    items.push(result)
+  });
+
+  return items;
+}
+
 export const formatImageTitle = (name) => name.replaceAll(' ', '').toLowerCase()

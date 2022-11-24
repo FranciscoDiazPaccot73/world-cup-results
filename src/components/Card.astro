@@ -29,7 +29,7 @@ const header = [
 				</div>
 				<div class="flex flex-col">
 					{info.teams.map((team: any )=> (
-						<div class="flex gap-2 text-xs md:gap-6 md:text-base">
+						<div class="flex gap-2 text-xs relative bord md:gap-6 md:text-base">
 							<p class="gaps">
 								<Image src={`/${formatImageTitle(team.name)}.png`} alt="Logo" width={24} height={20} loading="eager" format="png" />
 								<span class="hidden md:block">{team.name}</span>
@@ -98,9 +98,25 @@ const header = [
 		display: flex;
 		gap: 6px;
 	}
+	.bord:nth-child(1)::before,
+	.bord:nth-child(2)::before {
+		content: '';
+		height: 24px;
+		width: 4px;
+		background-color: var(--qatar2022);
+		position: absolute;
+		top: 0.5rem;
+		left: -0.6rem;
+	}
 	@media(max-width: 768px) {
 		.gaps {
 			width: 20px;
+		}
+		.bord:nth-child(1)::before,
+		.bord:nth-child(2)::before {
+			height: 18px;
+			top: 0.6rem;
+			left: -0.7rem;
 		}
 	}
 </style>
