@@ -99,3 +99,24 @@ export const formatPlayoffResult = (data) => {
 }
 
 export const formatImageTitle = (name) => name.replaceAll(' ', '').toLowerCase()
+
+export const getCountdown = () => {
+  function msToTime(duration) {
+  let seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+  hours = (hours < 10) ? "0" + hours : hours;
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return hours + " hs, " + minutes + " min, " + seconds + ' sec';
+}
+  
+  const date1 = new Date().getTime();
+  const date2 = new Date('06/09/2026').getTime();
+  const diffTime = Math.abs(date2 - date1);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return `${diffDays} days, ${msToTime(diffTime)}`
+}

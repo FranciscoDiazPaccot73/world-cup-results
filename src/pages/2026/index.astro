@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+import { getCountdown } from '../../utils'
+---
+
+<Layout title="FIFA World Cup results" page='home' year="2026" disabled>
+	<main>
+		<p class=" text-5xl text-center my-6">COUNTDOWN:</p>
+		<p class="text-4xl text-center" id='countdown'>{getCountdown()}</p>
+	</main>
+</Layout>
+
+<script>
+	const Countdown: any = document.getElementById('countdown')
+
+	const getCountdown = () => {
+  function msToTime(duration: any) {
+  let seconds: any = Math.floor((duration / 1000) % 60),
+    minutes: any = Math.floor((duration / (1000 * 60)) % 60),
+    hours: any = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+  hours = (hours < 10) ? "0" + hours : hours;
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return hours + " hs, " + minutes + " min, " + seconds + ' sec';
+}
+  
+  const date1 = new Date().getTime();
+  const date2 = new Date('06/09/2026').getTime();
+  const diffTime = Math.abs(date2 - date1);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return `${diffDays} days, ${msToTime(diffTime)}`
+}
+	
+	const initCountdown = () => {
+		setTimeout(() => {
+			Countdown.innerText = getCountdown()
+			initCountdown();
+		}, 1000);
+	}
+
+	initCountdown()
+</script>
+
+<style>
+	main {
+		margin: auto;
+		padding: 0 1.5rem 1.5rem;
+		max-width: 750px;
+	}
+	h1 {
+		font-size: 3rem;
+		font-weight: 800;
+		margin: 0;
+	}
+	.instructions {
+		line-height: 1.6;
+		margin: 1rem 0;
+		border: 1px solid rgba(var(--accent), 25%);
+		background-color: white;
+		padding: 1rem;
+		border-radius: 0.4rem;
+	}
+	.instructions code {
+		font-size: 0.875em;
+		font-weight: bold;
+		background: rgba(var(--accent), 12%);
+		color: rgb(var(--accent));
+		border-radius: 4px;
+		padding: 0.3em 0.45em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent));
+	}
+	.link-card-grid {
+		display: grid;
+		gap: 1rem;
+		padding: 0;
+	}
+	
+	@media(max-width: 760px) {
+		.link-card-grid {
+			grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		}
+	}
+</style>

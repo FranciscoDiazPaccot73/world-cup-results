@@ -7,11 +7,13 @@ export interface Props {
 	title: string;
 	page: string;
 	year: string;
+	disabled?: boolean
 }
 
-const { title, page, year } = Astro.props;
+const { title, page, year, disabled } = Astro.props;
 
 const sedes = [
+	{ label: 'USA', id: '2026' },
 	{ label: 'QATAR', id: '2022' },
 	{ label: 'RUSIA', id: '2018' },
 	{ label: 'BRASIL', id: '2014' },
@@ -39,14 +41,22 @@ const sedes = [
 	<nav class="m-auto max-w-3xl px-6 mt-6">
 		<ul class="flex border-b">
 			<li class={`py-0 w-24 text-center cursor-pointer ${page === 'home' ? "nav-selected" : ''} nav-elem`}>
-				<a class="block py-4" href={`/${year}`}>
-					Grupos
-				</a>
+				{disabled ? (
+					<span class="block py-4">Grupos</span>
+				) : (
+					<a class="block py-4" href={`/${year}`}>
+						Grupos
+					</a>
+				)}
 			</li>
 			<li class={`py-0 w-24 text-center cursor-pointer ${page === 'playoffs' ? "nav-selected" : ''} nav-elem`}>
-				<a class="block py-4" href={`/${year}/playoff`}>
-					Play-Off
-				</a>
+				{disabled ? (
+					<span class="block py-4">Play-off</span>
+				) : (
+					<a class="block py-4" href={`/${year}/playoff`}>
+						Play-Off
+					</a>
+				)}
 			</li>
 		</ul>
 	</nav>
