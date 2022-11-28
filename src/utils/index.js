@@ -98,6 +98,28 @@ export const formatPlayoffResult = (data) => {
   return items;
 }
 
+export const formatGamesResult = (data, group) => {
+  const items = []
+  data.forEach(res => {
+    let result = { id: res.id, group };
+    const keys = {
+      1: 'date',
+      2: 'result',
+      3: 'teamA',
+      4: 'teamB'
+    }
+    res.components?.forEach(({ type, child, ...others }, index) => {
+      if (type === 'string') {
+        const stringResult = formatStringType({ value: others.value, label: keys[index] });
+        result = { ...result, ...stringResult }
+      }
+    });
+    items.push(result)
+  });
+
+  return items;
+}
+
 export const formatImageTitle = (name) => name.replaceAll(' ', '').toLowerCase()
 
 export const getCountdown = () => {

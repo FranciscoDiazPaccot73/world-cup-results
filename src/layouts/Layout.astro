@@ -58,6 +58,15 @@ const sedes = [
 					</a>
 				)}
 			</li>
+			{
+				year === '2022' ? (
+					<li class={`py-0 w-24 text-center cursor-pointer ${page === 'games' ? "nav-selected" : ''} nav-elem`}>
+						<a class="block py-4" href={`/${year}/games`}>
+							Partidos
+						</a>
+					</li>
+				) : null
+			}
 		</ul>
 	</nav>
 	<body>

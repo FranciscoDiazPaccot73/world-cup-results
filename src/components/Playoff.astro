@@ -1,7 +1,5 @@
 ---
-import { Image } from '@astrojs/image/components';
-
-import { formatImageTitle } from '../utils';
+import PlayoffGames from './PlayoffGames.astro';
 
 const { octavos, cuartos, semis, final, tercero } = Astro.props;
 
@@ -21,227 +19,38 @@ const semisID: any = {
 
 <div class="flex mt-10 gap-20 overflow-auto whitespace-nowrap">
   <div id='octavos' class="flex flex-col gap-4">
-    {octavos?.map((game: any, index: any) => {
-      const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
-      let penaltiesA, penaltiesB, winner;
-
-      if (goalsTeamA) {
-        winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
-      }
-      if (rest.length) {
-        penaltiesA = rest[0]
-        penaltiesB = rest[1]
-        winner = penaltiesB > penaltiesA ? 'b' : 'a';
-      }
-
-      return (
-        <div class="relative px-5 py-6 border rounded-md border-purple-600">
-          <div class="absolute top-1 left-1 text-sm w-5 h-5 text-center bg-purple-300 rounded-full">{index + 1}</div>
-          <div class="absolute w-10 bg-purple-600 horizontal" />
-          {!(index % 2) && <div class="absolute bg-purple-600 vertical" />}
-          <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
-            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
-            {game.teama}
-            <span class="ml-auto">{goalsTeamA ?? '-'}</span>
-            {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
-            </div>
-          <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
-            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
-            {game.teamb}
-            <span class="ml-auto">{goalsTeamB ?? '-'}</span>
-            {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
-          </div>
-        </div>
-      )})
-    }
+    <PlayoffGames games={octavos} verticalClass="vertical" horizontalClass="horizontal" />
   </div>
   <div id='cuartos' class="flex flex-col">
-    {cuartos?.map((game: any, index: any) => {
-      const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
-      let penaltiesA, penaltiesB, winner;
-
-      if (goalsTeamA) {
-        winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
-      }
-      if (rest.length) {
-        penaltiesA = rest[0]
-        penaltiesB = rest[1]
-
-        winner = penaltiesB > penaltiesA ? 'b' : 'a';
-      }
-
-      return (
-        <div class="relative px-5 py-6 border rounded-md border-purple-600 cuartos-elem">
-          <div class="absolute top-1 left-1 text-sm w-5 h-5 text-center bg-purple-300 rounded-full">{cuartosID[index]}</div>
-          <div class="absolute w-10 bg-purple-600 horizontal" />
-          <div class="absolute w-10 bg-purple-600 horizontal-left" />
-          {!(index % 2) && <div class="absolute bg-purple-600 vertical-lg" />}
-          <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
-            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
-            {game.teama}
-            <span class="ml-auto">{goalsTeamA ?? '-'}</span>
-            {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
-          </div>
-          <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
-            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
-            {game.teamb}
-            <span class="ml-auto">{goalsTeamB ?? '-'}</span>
-            {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
-          </div>
-        </div>
-      )})
-    }
+    <PlayoffGames
+      games={cuartos}
+      verticalClass='vertical-lg'
+      horizontalClass='horizontal'
+      horizontalSecondary={true}
+      wrapperAdditionalClass="cuartos-elem"
+      indexes={cuartosID}
+    />
   </div>
   <div id='semis' class="flex flex-col">
-    {semis?.map((game: any, index: any) => {
-      const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
-      let penaltiesA, penaltiesB, winner;
-
-      if (goalsTeamA) {
-        winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
-      }
-      if (rest.length) {
-        penaltiesA = rest[0]
-        penaltiesB = rest[1]
-
-        winner = penaltiesB > penaltiesA ? 'b' : 'a';
-      }
-
-      return (
-        <div class="relative px-5 py-6 border rounded-md border-purple-600 semis-elem">
-          <div class="absolute top-1 left-1 text-sm w-5 h-5 text-center bg-purple-300 rounded-full">{semisID[index]}</div>
-          <div class="absolute w-10 bg-purple-600 horizontal" />
-          <div class="absolute w-10 bg-purple-600 horizontal-left" />
-          {!(index % 2) && <div class="absolute bg-purple-600 vertical-xl" />}
-          <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
-            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
-            {game.teama}
-            <span class="ml-auto">{goalsTeamA ?? '-'}</span>
-            {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
-          </div>
-          <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
-            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
-            {game.teamb}
-            <span class="ml-auto">{goalsTeamB ?? '-'}</span>
-            {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
-          </div>
-        </div>
-      )})
-    }
+    <PlayoffGames
+      games={semis}
+      verticalClass='vertical-xl'
+      horizontalClass='horizontal'
+      horizontalSecondary={true}
+      wrapperAdditionalClass="semis-elem"
+      indexes={semisID}
+    />
   </div>
   <div id='final' class="flex flex-col">
-    {final?.map((game: any) => {
-      const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
-      let penaltiesA, penaltiesB, winner;
-
-      if (goalsTeamA) {
-        winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
-      }
-      if (rest.length) {
-        penaltiesA = rest[0]
-        penaltiesB = rest[1]
-
-        winner = penaltiesB > penaltiesA ? 'b' : 'a';
-      }
-
-      return (
-        <div class="relative px-5 py-6 border rounded-md border-purple-600">
-          <div class="absolute w-10 bg-purple-600 horizontal-left" />
-          <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
-            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
-            {game.teama}
-            <span class="ml-auto">{goalsTeamA ?? '-'}</span>
-          </div>
-          <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
-            {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
-            {game.teamb}
-            <span class="ml-auto">{goalsTeamB ?? '-'}</span>
-          </div>
-        </div>
-      )})
-    }
+    <PlayoffGames games={final} horizontalSecondary={true} showIndex={false} />
     <div id='tercero' class="flex flex-col mt-10">
-      {tercero?.map((game: any) => {
-        const [goalsTeamA, goalsTeamB, ...rest] = game.result?.split('-') ?? [null, null]
-        let penaltiesA, penaltiesB, winner;
-
-        if (goalsTeamA) {
-          winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
-        }
-        if (rest.length) {
-          penaltiesA = rest[0]
-          penaltiesB = rest[1]
-
-          winner = penaltiesB > penaltiesA ? 'b' : 'a';
-        }
-
-        return (
-          <div class="relative px-5 py-6 border rounded-md border-purple-600">
-            <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
-              {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
-              {game.teama}
-              <span class="ml-auto">{goalsTeamA ?? '-'}</span>
-            </div>
-            <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
-              {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
-              {game.teamb}
-              <span class="ml-auto">{goalsTeamB ?? '-'}</span>
-            </div>
-          </div>
-        )})
-      }
+      <PlayoffGames games={tercero} showIndex={false} />
     </div>
   </div>
 </div>
 
 <style>
-  .horizontal {
-    height: 1px;
-    top: 50%;
-    left: 100%;
-  }
-  .horizontal-left {
-    height: 1px;
-    top: 50%;
-    right: 100%;
-  }
-  .vertical {
-    width: 1px;
-    height: 115px;
-    left: calc(100% + 40px);
-    top: 50%;
-  }
-  .vertical-lg {
-    width: 1px;
-    height: 236px;
-    left: calc(100% + 40px);
-    top: 50%;
-  }
-  .vertical-xl {
-    width: 1px;
-    height: 479px;
-    left: calc(100% + 40px);
-    top: 50%;
-  }
-  .semis-elem:first-of-type {
-    margin: 160px 0 380px;
-  }
-  .cuartos-elem:first-of-type {
-    margin-top: 49px;
-  }
-  .cuartos-elem {
-    margin-top: 137px;
-  }
   #final {
     margin-top: 388px;
   }
-  .winner::after {
-		content: '';
-		height: 18px;
-		width: 4px;
-		background-color: #9333ea;
-		position: absolute;
-		top: 4px;
-		right: -10px;
-	}
 </style>

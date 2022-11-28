@@ -1,0 +1,53 @@
+---
+import { Image } from '@astrojs/image/components';
+
+import { formatImageTitle } from '../utils';
+
+const { date, teama, teamb, result, group } = Astro.props
+
+const [goalsTeamA, goalsTeamB, ...rest] = result?.split('-') ?? [null, null]
+let penaltiesA, penaltiesB, winner;
+
+if (goalsTeamA) {
+  winner = goalsTeamA > goalsTeamB ? 'a' : 'b'
+}
+if (rest.length) {
+  penaltiesA = rest[0]
+  penaltiesB = rest[1]
+  winner = penaltiesB > penaltiesA ? 'b' : 'a';
+}
+
+const groupStage = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const isGroupStage = groupStage.includes(group)
+---
+
+<div class="p-6 pr-8 rounded border bg-white border-purple-600 flex flex-col gap-4">
+  <div class="flex justify-between items-center">
+    <p class="font-bold">{`${ isGroupStage ? `Grupo ${group}` : group}`}</p>
+    <span>{`${date}/2022`}</span>
+  </div>
+  <div>
+    <div class={`flex relative ${winner === 'a' && isGroupStage && goalsTeamA !== goalsTeamB ? 'winner' : ''}`}>
+      <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(teama)}.png`} alt={teama} width={16} height={16} loading="eager" format="png" /></span>
+      {teama}
+      <span class="ml-auto">{goalsTeamA}</span>
+    </div>
+    <div class={`flex relative ${winner === 'b' && isGroupStage && goalsTeamA !== goalsTeamB ? 'winner' : ''}`}>
+      <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(teamb)}.png`} alt={teamb} width={16} height={16} loading="eager" format="png" /></span>
+      {teamb}
+      <span class="ml-auto">{goalsTeamB}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .winner::after {
+		content: '';
+		height: 18px;
+		width: 4px;
+		background-color: #9333ea;
+		position: absolute;
+		top: 4px;
+		right: -10px;
+	}
+</style>
