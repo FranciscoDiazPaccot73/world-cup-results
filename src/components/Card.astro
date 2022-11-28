@@ -11,7 +11,7 @@ export interface Props {
 const { title, info } = Astro.props;
 
 const header = [
-	'Equipo', 'PJ', 'G', 'E', 'P', 'GF', 'GC', 'DG', 'Pts'
+	'Equipo', 'PJ', 'G', 'E', 'P', 'GF', 'GC', '+/-', 'Pts'
 ]
 ---
 
@@ -40,7 +40,7 @@ const header = [
 							<p class="gaps">{team.lost}</p>
 							<p class="gaps">{team.gf}</p>
 							<p class="gaps">{team.gc}</p>
-							<p class="gaps">{team.dg}</p>
+							<p style={{ textAlign: "center" }} class="gaps">{`${team.dg > 0 ? '+' : ''}${team.dg}`}</p>
 							<p class="gaps">{team.points}</p>
 						</div>
 					))}
