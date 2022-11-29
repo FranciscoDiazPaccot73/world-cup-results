@@ -26,13 +26,17 @@ const { games, horizontalClass, verticalClass = '', wrapperAdditionalClass = '',
       {horizontalSecondary ? <div class="absolute w-10 bg-purple-600 horizontal-left" /> : null}
       {!(index % 2) && <div class={`absolute bg-purple-600 ${verticalClass}`} />}
       <div class={`flex relative w-40 ${winner === 'a' ? 'winner' : ''}`}>
-        {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>}
+        {!game.teama?.includes('Grupo') && !game.teama?.includes('Ganador') && 
+          <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teama)}.png`} alt={game.teama} width={16} height={16} loading="eager" format="png" /></span>
+        }
         {game.teama}
         <span class="ml-auto">{goalsTeamA ?? '-'}</span>
         {penaltiesA && <span class="ml-1">{`(${penaltiesA})`}</span>}
         </div>
       <div class={`flex relative w-40 ${winner === 'b' ? 'winner' : ''}`}>
-        {winner && <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>}
+        {!game.teamb?.includes('Grupo') && !game.teamb?.includes('Ganador') && 
+          <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(game.teamb)}.png`} alt={game.teamb} width={16} height={16} loading="eager" format="png" /></span>
+        }
         {game.teamb}
         <span class="ml-auto">{goalsTeamB ?? '-'}</span>
         {penaltiesB && <span class="ml-1">{`(${penaltiesB})`}</span>}
