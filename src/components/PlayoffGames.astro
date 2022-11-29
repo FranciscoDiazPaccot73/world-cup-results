@@ -20,7 +20,7 @@ const { games, horizontalClass, verticalClass = '', wrapperAdditionalClass = '',
   }
 
   return (
-    <div class={`relative px-5 py-6 border rounded-md border-purple-600 ${wrapperAdditionalClass}`}>
+    <div class={`relative px-5 py-6 border rounded-md border-purple-600 shadow-md bg-white ${wrapperAdditionalClass}`}>
       {showIndex ? <div class="absolute top-1 left-1 text-sm w-5 h-5 text-center bg-purple-300 rounded-full">{indexes ? indexes[index] : index + 1}</div> : null}
       {horizontalClass ? <div class={`absolute w-10 bg-purple-600 ${horizontalClass}`} /> : null}
       {horizontalSecondary ? <div class="absolute w-10 bg-purple-600 horizontal-left" /> : null}

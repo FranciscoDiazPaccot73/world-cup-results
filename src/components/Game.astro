@@ -3,7 +3,7 @@ import { Image } from '@astrojs/image/components';
 
 import { formatImageTitle } from '../utils';
 
-const { date, teama, teamb, result, group } = Astro.props
+const { date, teama, teamb, result, group, isToday, isTomorrow, isYesterday } = Astro.props
 
 const [goalsTeamA, goalsTeamB, ...rest] = result?.split('-') ?? [null, null]
 let penaltiesA, penaltiesB, winner;
@@ -19,13 +19,17 @@ if (rest.length) {
 
 const groupStage = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const isGroupStage = groupStage.includes(group)
+
+const wrapperBg = isToday ? 'bg-purple-600 text-white' : 'bg-white';
+let dateString = new Date(`${date}/2022`).toDateString();
+if (isToday) dateString = 'Hoy';
+if (isYesterday) dateString = 'Ayer'
+if (isTomorrow) dateString = "Mañana"
 ---
 
-<div class="p-6 pr-8 rounded border bg-white border-purple-600 flex flex-col gap-4">
-  <div class="flex justify-between items-center">
-    <p class="font-bold">{`${ isGroupStage ? `Grupo ${group}` : group}`}</p>
-    <span>{`${date}/2022`}</span>
-  </div>
+<div id={isToday ? 'today-game' : date} class={`p-6 pr-8 rounded relative border shadow-md flex flex-col gap-4 ${wrapperBg}`}>
+  <p class="font-bold">{`${ isGroupStage ? `Grupo ${group}` : group}`}</p>
+  <span class="text-xs absolute top-3 right-3">{dateString}</span>
   <div>
     <div class={`flex relative ${winner === 'a' && isGroupStage && goalsTeamA !== goalsTeamB ? 'winner' : ''}`}>
       <span class="mt-1 mr-1"><Image src={`/${formatImageTitle(teama)}.png`} alt={teama} width={16} height={16} loading="eager" format="png" /></span>
@@ -39,6 +43,14 @@ const isGroupStage = groupStage.includes(group)
     </div>
   </div>
 </div>
+
+<script>
+  const todayGames = document.getElementById('today-game')
+  
+  if (todayGames) {
+    window.scrollTo({left: todayGames.offsetLeft, top: todayGames.offsetTop - 50, behavior: 'smooth'})
+  }
+</script>
 
 <style>
   .winner::after {

@@ -2,17 +2,30 @@
 import Layout from '../../layouts/Layout.astro';
 import Game from '../../components/Game.astro';
 
-import { games } from '../../data/qatar/groups';
+import { games } from '../../data/qatar/games/index';
 
 const results = games()
+
+const oneDayInMs = 1000 * 3600 * 24;
+const today = new Date();
+const tomorrow = new Date(today.getTime() + oneDayInMs);
+const yesterday = new Date(today.getTime() - oneDayInMs);
 ---
 
 <Layout title="FIFA World Cup results" page='games' year="2022">
 	<main>
 		<ul role="list" class="mt-10 link-card-grid">
-			{results.map((result) => (
-				<Game {...result} />
-			))}
+			{results.map((result) => {
+				const dates = {
+					isToday: new Date(`${result.date}/2022`).toDateString() === today.toDateString(),
+					isTomorrow: new Date(`${result.date}/2022`).toDateString() === tomorrow.toDateString(),
+					isYesterday: new Date(`${result.date}/2022`).toDateString() === yesterday.toDateString(),
+				}
+
+				return (
+					<Game {...result} {...dates} />
+				)
+			})}
 		</ul>
 	</main>
 </Layout>

@@ -4,7 +4,7 @@ import semisData from './semis.json';
 import finalData from './final.json';
 import tercerData from './tercero.json';
 
-import { formatPlayoffResult } from '../../utils';
+import { formatPlayoffResult } from '../../../utils';
 
 export default {
   octavos: formatPlayoffResult(octavosData.data),
