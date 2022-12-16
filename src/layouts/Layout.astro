@@ -17,6 +17,7 @@ const sedes = [
 	{ label: 'QATAR', id: '2022' },
 	{ label: 'RUSIA', id: '2018' },
 	{ label: 'BRASIL', id: '2014' },
+	{ label: 'SUDAFRICA', id: '2010' },
 ]
 ---
 
@@ -34,7 +35,7 @@ const sedes = [
 	</div>
 	<p class="w-full text-4xl text-center px-6">
 		<select name="sedes" id="sedes" class="cursor-pointer rounded-full p-3 text-3xl border border-purple-600">
-			{sedes.map((sede: any) => <option value={sede.id}>{sede.label}</option>)}
+			{sedes.map((sede: any) => <option value={sede.id}>{sede.id} {sede.label}</option>)}
 		</select>
 		<span class="text-gradient font-bold">FIFA World Cup</span> results
 	</p>
