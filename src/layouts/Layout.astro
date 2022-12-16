@@ -6,7 +6,7 @@ import "../styles/global.css";
 export interface Props {
 	title: string;
 	page: string;
-	year: string;
+	year?: string;
 	disabled?: boolean
 }
 
@@ -31,17 +31,20 @@ const sedes = [
 		<title>{title}</title>
 	</head>
 	<div class="flex flex-col mb-4 mt-12 items-center justify-center w-full">
-		<Image src={`/logo-${year}.png`} alt="Logo" width={150} height={90} loading="eager" format="png" />
+		<Image src={`/${year ? `logo-${year}` : 'tropy'}.png`} alt="Logo" width={150} height={90} loading="eager" format="png" />
 	</div>
-	<p class="w-full text-4xl text-center px-6">
-		<select name="sedes" id="sedes" class="cursor-pointer rounded-full p-3 text-3xl border border-purple-600">
-			{sedes.map((sede: any) => <option value={sede.id}>{sede.id} {sede.label}</option>)}
-		</select>
+	<p class="w-full text-4xl text-center px-6 h-16">
+		{year ? (
+			<select name="sedes" id="sedes" class="cursor-pointer rounded-full p-3 text-3xl border border-purple-600">
+				{sedes.map((sede: any) => <option value={sede.id}>{sede.id} {sede.label}</option>)}
+			</select>
+		) : null}
 		<span class="text-gradient font-bold">FIFA World Cup</span> results
 	</p>
 	<nav class="m-auto max-w-3xl px-6 mt-6">
 		<ul class="flex border-b">
-			<li class={`py-0 w-24 text-center cursor-pointer ${page === 'home' ? "nav-selected" : ''} nav-elem`}>
+			{year ? (
+				<li class={`py-0 w-24 text-center cursor-pointer ${page === 'home' ? "nav-selected" : ''} nav-elem`}>
 				{disabled ? (
 					<span class="block py-4">Grupos</span>
 				) : (
@@ -49,25 +52,39 @@ const sedes = [
 						Grupos
 					</a>
 				)}
-			</li>
-			<li class={`py-0 w-24 text-center cursor-pointer ${page === 'playoffs' ? "nav-selected" : ''} nav-elem`}>
-				{disabled ? (
-					<span class="block py-4">Play-off</span>
-				) : (
-					<a class="block py-4" href={`/${year}/playoff`}>
-						Play-Off
-					</a>
-				)}
-			</li>
-			{
-				year === '2022' ? (
-					<li class={`py-0 w-24 text-center cursor-pointer ${page === 'games' ? "nav-selected" : ''} nav-elem`}>
-						<a class="block py-4" href={`/${year}/games`}>
-							Partidos
+				</li>
+				<li class={`py-0 w-24 text-center cursor-pointer ${page === 'playoffs' ? "nav-selected" : ''} nav-elem`}>
+					{disabled ? (
+						<span class="block py-4">Play-off</span>
+					) : (
+						<a class="block py-4" href={`/${year}/playoff`}>
+							Play-Off
 						</a>
-					</li>
-				) : null
-			}
+					)}
+				</li>
+				<>
+					{
+						year === '2022' ? (
+							<li class={`py-0 w-24 text-center cursor-pointer ${page === 'games' ? "nav-selected" : ''} nav-elem`}>
+								<a class="block py-4" href={`/${year}/games`}>
+									Partidos
+								</a>
+							</li>
+						) : null
+					}
+				</>
+			) : (
+				<li class={`py-0 w-24 text-center cursor-pointer nav-elem`}>
+					<a class="block py-4" href={`/`}>
+						Inicio
+					</a>
+				</li>
+			)}
+			<li class={`py-0 w-24 text-center cursor-pointer ml-auto ${page === 'winners' ? "nav-selected" : ''} nav-elem`}>
+				<a class="block py-4" href={`/winners`}>
+					Ganadores
+				</a>
+			</li>
 		</ul>
 	</nav>
 	<body>

@@ -1,0 +1,111 @@
+---
+import { Image } from '@astrojs/image/components';
+import { formatImageTitle } from '../utils';
+
+const { info } = Astro.props;
+
+const { edicion, ganador, segundo, tercero, sede, equipos, partidos, goles } = info;
+
+console.log(info)
+---
+
+<li class="link-card md:min-w-max">
+	<div>
+    <div class='w-full flex items-center'>
+      <h2 class="inline-block">{`${sede} ${edicion}`}</h2>
+      <p class="my-0 ml-auto text-xs">{`Teams: ${equipos} | Games: ${partidos} | Goles: ${goles}`}</p>
+    </div>
+		<div class="mt-6 flex gap-4 justify-center md:gap-14">
+      <div class="w-20 md:w-24 h-32">
+        <div class="mt-5 h-24 border-b-4 border-b-slate-500 flex flex-col items-center">
+          <Image src={`/${formatImageTitle(segundo)}.png`} alt={segundo} width={60} height={54} loading="eager" format="png" />
+          <span class="font-bold mt-1 text-sm">{segundo.toUpperCase()}</span>
+        </div>
+      </div>
+      <div class="w-20 md:w-24 h-32">
+        <div class="h-24 border-b-4 border-b-amber-300 flex flex-col items-center">
+          <Image src={`/${formatImageTitle(ganador)}.png`} alt={ganador} width={60} height={54} loading="eager" format="png" />
+          <span class="font-bold mt-1 text-sm">{ganador.toUpperCase()}</span>
+        </div>
+      </div>
+      <div class="w-20 md:w-24 h-32">
+        <div class="mt-6 h-24 border-b-4 border-b-orange-700 flex flex-col items-center">
+          <Image src={`/${formatImageTitle(tercero)}.png`} alt={tercero} width={60} height={54} loading="eager" format="png" />
+          <span class="font-bold mt-1 text-sm">{tercero.toUpperCase()}</span>
+        </div>
+      </div>
+		</div>
+	</div>
+</li>
+
+<style>
+	.link-card {
+		list-style: none;
+		display: flex;
+		padding: 0.15rem;
+		background-color: white;
+		background-image: var(--accent-gradient);
+		background-size: 400%;
+		border-radius: 0.5rem;
+		background-position: 100%;
+		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+	}
+
+	.link-card > div {
+		width: 100%;
+		text-decoration: none;
+		line-height: 1.4;
+		padding: 1rem 1.3rem;
+		border-radius: 0.35rem;
+		color: #111;
+		background-color: white;
+		opacity: 0.8;
+	}
+	h2 {
+		margin: 0;
+		font-size: 1.25rem;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	p {
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+		color: #444;
+	}
+	.link-card:is(:hover, :focus-within) {
+		background-position: 0;
+	}
+	.link-card:is(:hover, :focus-within) h2 {
+		color: rgb(var(--accent));
+	}
+	.gaps {
+		width: 28px;
+	}
+	.gaps:first-of-type {
+		margin-right: auto;
+		width: auto;
+		display: flex;
+		gap: 6px;
+	}
+	.bord:nth-child(1)::before,
+	.bord:nth-child(2)::before {
+		content: '';
+		height: 24px;
+		width: 4px;
+		background-color: var(--qatar2022);
+		position: absolute;
+		top: 0.5rem;
+		left: -0.6rem;
+	}
+	@media(max-width: 768px) {
+		.gaps {
+			width: 20px;
+		}
+		.bord:nth-child(1)::before,
+		.bord:nth-child(2)::before {
+			height: 18px;
+			top: 0.6rem;
+			left: -0.7rem;
+		}
+	}
+</style>

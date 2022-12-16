@@ -4,6 +4,13 @@ const formatStringType = ({ label, value }) => {
   }
 }
 
+const formatStringWithoutSpecialChars = ({ label, value }) => {
+  const key = label.toLowerCase().replaceAll('# ', '')
+  return {
+    [key]: value,
+  }
+}
+
 const elems = {
   0: 'name',
   1: 'pj',
@@ -69,6 +76,22 @@ export const formatResult = (data) => {
       if (type === 'array') {
         const arrayResult = formatArrayType(child)
         result = { ...result, teams: arrayResult }
+      }
+    });
+    items.push(result)
+  });
+
+  return items;
+}
+
+export const formatWinners = (data) => {
+  const items = []
+  data.forEach(res => {
+    let result = { id: res.id };
+    res.components?.forEach(({ type, child, ...others }) => {
+      if (type === 'string') {
+        const stringResult = formatStringWithoutSpecialChars(others);
+        result = { ...result, ...stringResult }
       }
     });
     items.push(result)
