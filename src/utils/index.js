@@ -96,6 +96,8 @@ export const formatWinners = (data) => {
     });
     items.push(result)
   });
+  console.log(items)
+  items.sort((a,b) => b.edicion - a.edicion)
 
   return items;
 }
